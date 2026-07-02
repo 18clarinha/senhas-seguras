@@ -10,6 +10,8 @@ const botoes = document.querySelectorAll(".parametro-senha__botao");
 // Checkboxes
 const checkbox = document.querySelectorAll(".checkbox");
 
+const forcaSenha = document.querySelector('.forca');
+
 // Tamanho inicial
 let tamanhoSenha = 12;
 numeroSenha.textContent = tamanhoSenha;
@@ -51,6 +53,7 @@ function geraSenha() {
     }
 
     campoSenha.value = senha;
+    classificaSenha();
 }
 
 // Diminuir tamanho
@@ -82,3 +85,18 @@ checkbox.forEach(item => {
 
 // Gerar senha inicial
 geraSenha();
+
+function classificaSenha(tamanhoAlfabeto){
+    let entropia = tamanhoSenha * Math.log2(tamanhoSenha);
+    console.log(entropia);
+    forcaSenha.classList.remove('fraca','media','forte');
+    if (entropia > 57){
+        forcaSenha.classList.add('forte');
+    } else if (entropia > 35 && entropia < 57) {
+        forcaSenha.classList.add('media');
+    } else if (entropia <= 35){
+        forcaSenha.classList.add('fraca');
+    }
+    const valorEntropia = document.querySelector('.entropia');
+        valorEntropia.textContent = "Um computador pode levar até " + Math.floor(2**entropia/(100e6*60*60*24)) + " dias para descobrir essa senha.";
+}
